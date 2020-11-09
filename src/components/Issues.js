@@ -1,6 +1,7 @@
 import React from 'react';
 import '../css/Issues.css';
 import * as helper from '../utils/helper';
+import { Col, Container, Row } from 'react-bootstrap';
 
 
 const headers = {
@@ -81,6 +82,10 @@ class Issues extends React.Component {
             });
     }
 
+    // Render a loading bar during HTTP Request
+    renderLoading() {
+        return <progress className="progress is-large is-dark" max="100"></progress>;
+    }
 
     // Render an error message
     renderError() {
@@ -96,6 +101,26 @@ class Issues extends React.Component {
         if (this.state.error) {
             return this.renderError();
         }
+
+        return (
+            < React.Fragment >
+                {
+                    this.state.issues.map(function (data, index) {
+                       return <Container>
+                                    <span data-id={data.id} >
+                                        <Row>
+                                            <Col md={3}><i className="fa fa-exclamation-circle"></i></Col>
+                                            <Col md={9}><span className="title">{data.title}</span></Col>
+                                        </Row>
+                                </span>
+                                </Container>
+
+                    })
+
+                }
+            
+            </React.Fragment>
+        );
     }
 
     render() {
@@ -103,7 +128,11 @@ class Issues extends React.Component {
         return (
             <div className="container">
                 <nav className="panel">
-                   Render issues here
+                <span>Issues</span>
+                <hr></hr>
+                {this.state.loading ?
+                    this.renderLoading()
+                    : this.renderIssues()}
                 </nav>
             </div>);
     }
