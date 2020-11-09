@@ -5,7 +5,7 @@ import * as helper from '../utils/helper';
 
 const headers = {
     headers: {
-        Authorization: "token 00eca358a6de4ffe5139c23945026d6951f3b099",
+        Authorization: "token e359ef605cbdf330a70659af7cbce43b2f3bce5c",
         Accept: "application/vnd.github.v3+json,application/vnd.github.machine-man-preview+json",
     }
 };
