@@ -3,6 +3,7 @@ import '../css/Issues.css';
 import * as helper from '../utils/helper';
 import { Col, Container, Row , ProgressBar} from 'react-bootstrap';
 import IssueDetails from './IssueDetails';
+import Labels from './Labels';
 
 const headers = {
     headers: {
@@ -112,6 +113,7 @@ class Issues extends React.Component {
                                         <Row>
                                             <Col md={1}><i className="fa fa-exclamation-circle fa-3x"></i></Col>
                                             <Col md={11} className="issueDetails"><span className="title">{data.title}</span>
+                                                        <Labels labels={data.labels} />
                                                         <br/>
                                                         <span className="timestamp">
                                                             <IssueDetails data={data} />

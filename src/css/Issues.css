@@ -9,3 +9,11 @@
 .timestamp{
   font-size: 12px;
 }
+
+.label{
+  margin: 2px;
+  border-radius: 3px;
+  font-size: 12px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
