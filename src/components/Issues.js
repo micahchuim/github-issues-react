@@ -106,7 +106,8 @@ class Issues extends React.Component {
             < React.Fragment >
                 {
                     this.state.issues.map(function (data, index) {
-                       return <Container>
+                       return <div key={index}>
+                                <Container>
                                     <span data-id={data.id} >
                                         <Row>
                                             <Col md={1}><i className="fa fa-exclamation-circle fa-3x"></i></Col>
@@ -119,6 +120,7 @@ class Issues extends React.Component {
                                         </Row>
                                 </span>
                                 </Container>
+                                </div>
 
                     })
 
