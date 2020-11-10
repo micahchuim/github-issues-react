@@ -1,8 +1,8 @@
 import React from 'react';
 import '../css/Issues.css';
 import * as helper from '../utils/helper';
-import { Col, Container, Row } from 'react-bootstrap';
-
+import { Col, Container, Row , ProgressBar} from 'react-bootstrap';
+import IssueDetails from './IssueDetails';
 
 const headers = {
     headers: {
@@ -84,7 +84,7 @@ class Issues extends React.Component {
 
     // Render a loading bar during HTTP Request
     renderLoading() {
-        return <progress className="progress is-large is-dark" max="100"></progress>;
+        return <ProgressBar animated now={100}/>;
     }
 
     // Render an error message
@@ -109,8 +109,13 @@ class Issues extends React.Component {
                        return <Container>
                                     <span data-id={data.id} >
                                         <Row>
-                                            <Col md={3}><i className="fa fa-exclamation-circle"></i></Col>
-                                            <Col md={9}><span className="title">{data.title}</span></Col>
+                                            <Col md={1}><i className="fa fa-exclamation-circle fa-3x"></i></Col>
+                                            <Col md={11} className="issueDetails"><span className="title">{data.title}</span>
+                                                        <br/>
+                                                        <span className="timestamp">
+                                                            <IssueDetails data={data} />
+                                                        </span>
+                                            </Col>
                                         </Row>
                                 </span>
                                 </Container>

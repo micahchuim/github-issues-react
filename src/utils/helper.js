@@ -28,3 +28,36 @@ export function parseLinkHeader(header) {
         return links;
     }, {});
 }
+
+export const getTimeStamp = (timestamp) => {
+    const SECOND = 1000,
+        MINUTE = SECOND * 60,
+        HOUR = MINUTE * 60,
+        DAY = HOUR * 24,
+        MONTH = DAY * 30,
+        YEAR = DAY * 365;
+
+    const timeelapsed = Date.now() - timestamp,
+        getElapsedString = (value, unit) => {
+            const round = Math.round(timeelapsed / value);
+            return `${round} ${unit}${round > 1
+                ? 's'
+                : ''} ago`;
+        };
+    if (timeelapsed < MINUTE) {
+        return getElapsedString(SECOND, 'second');
+    }
+    if (timeelapsed < HOUR) {
+        return getElapsedString(MINUTE, 'minute');
+    }
+    if (timeelapsed < DAY) {
+        return getElapsedString(HOUR, 'hour');
+    }
+    if (timeelapsed < MONTH) {
+        return getElapsedString(DAY, 'day');
+    }
+    if (timeelapsed < YEAR) {
+        return getElapsedString(MONTH, 'month');
+    }
+    return getElapsedString(YEAR, 'year');
+}
