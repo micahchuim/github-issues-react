@@ -25,10 +25,11 @@ class Issues extends React.Component {
             repo: this.props.repo,
             listFilter: { state: "open", choice: "issues" },
             since: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-            per_page: 40,
+            per_page: 10,
             sort: "created",
             page: '',
             currentPageNumber: 1,
+            currentPage: 1,
             pages: {},
             issues: [],
             loading: true,
@@ -37,7 +38,15 @@ class Issues extends React.Component {
         };
         
         this.getIssues = this.getIssues.bind(this);
+
+        this.handleClick = this.handleClick.bind(this);
     }
+
+    handleClick(event) {
+        this.setState({
+          currentPage: Number(event.target.id)
+        });
+      }
 
     componentDidMount() {
         this.getIssues();
@@ -103,10 +112,41 @@ class Issues extends React.Component {
             return this.renderError();
         }
 
+        const { issues, currentPage, per_page } = this.state;
+
+        // Logic for displaying issues
+        const indexOfLastIssue = currentPage * per_page;
+        const indexOfFirstIssue = indexOfLastIssue - per_page;
+        const currentIssues = issues.slice(indexOfFirstIssue, indexOfLastIssue);
+
+         // Logic for displaying page numbers
+         const pageNumbers = [];
+         for (let i = 1; i <= Math.ceil(issues.length / per_page); i++) {
+             pageNumbers.push(i);
+         }
+
+
+        const renderPageNumbers = pageNumbers.map(number => {
+            if(number === currentPage ){
+                return(
+                    <button className="btn btn-outline-primary pageBtn active" key={number} id={number} onClick={this.handleClick}>
+                        {number}
+                    </button>
+                )
+            }else{
+
+                return (
+                <button className="btn btn-outline-primary pageBtn" key={number} id={number} onClick={this.handleClick}>
+                    {number}
+                </button>
+                );
+            }
+          });
+         
         return (
             < React.Fragment >
                 {
-                    this.state.issues.map(function (data, index) {
+                    currentIssues.map(function (data, index) {
                        return <div key={index}>
                                 <Container>
                                     <span data-id={data.id} >
@@ -127,13 +167,12 @@ class Issues extends React.Component {
                     })
 
                 }
-            
+            {renderPageNumbers}
             </React.Fragment>
         );
     }
 
     render() {
-
         return (
             <div className="container">
                 <nav className="panel">
@@ -143,6 +182,7 @@ class Issues extends React.Component {
                     this.renderLoading()
                     : this.renderIssues()}
                 </nav>
+                
             </div>);
     }
    
