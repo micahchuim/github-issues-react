@@ -9,7 +9,7 @@ const IssueDetails = ({ data }) => {
 
   return (
     <React.Fragment>
-      {timeStamp}
+        {timeStamp}
     </React.Fragment>
 )
 }
